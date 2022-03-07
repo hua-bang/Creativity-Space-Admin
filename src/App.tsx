@@ -1,19 +1,42 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
-import Authorized from './components/Auth/Authorized'
+import { ReactElement, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import './App.css';
+import routes from './routes';
+import AuthWrapper from './components/Auth/AuthWrapper';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Authorized authority={'admin'} noMatch={null} userInfo={{ currentAuthority: 'admin' }}>
-          <button>进入管理后台</button>
-        </Authorized>
-      </header>
+      <div>
+        <Routes>
+          {
+            routes.map((route, index) => {
+              const { auth, path, element, redirectPath } = route;
+
+              return (
+                <Route 
+                  key={path}
+                  path={path}
+                  element={
+                    auth 
+                    ? (
+                      <AuthWrapper key={path} auth={auth} redirectPath={redirectPath}>
+                        {element as ReactElement<any, any>}
+                      </AuthWrapper>
+                    ) :
+                    element
+                  }
+                />
+              );
+
+              return 
+                
+            })
+          }
+        </Routes>
+      </div>
     </div>
   )
 }
