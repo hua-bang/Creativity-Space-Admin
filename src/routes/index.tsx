@@ -1,7 +1,7 @@
-import DashBoard from "../views/dashboard";
+import DashBoard from "../Views/Dashboard";
 import { RouteObject } from 'react-router-dom';
-import UserPage from "../views/user-page";
-import Login from "../views/login";
+import UserPage from "../Views/user-page";
+import Login from "../Views/Login";
 
 interface RouteConfig extends RouteObject {
   auth?: string | string[];
@@ -18,7 +18,6 @@ const routes: RouteConfig[] = [
   {
     path: '/user-page',
     element: <UserPage />,
-    auth: ['test'],
     redirectPath: '/login' 
   },
   {

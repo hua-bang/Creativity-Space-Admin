@@ -3,8 +3,8 @@ import { Layout, Menu, Breadcrumb, Button, Message } from '@arco-design/web-reac
 import { IconApps, IconBug, IconCaretRight, IconCaretLeft, IconBulb } from '@arco-design/web-react/icon';
 import './BasicLayout.css';
 import { Route, Routes } from 'react-router-dom';
-import Home from '../../views/dashboard/subViews/home';
-import Demo from '../../views/dashboard/subViews/demo';
+import Home from '../../Views/Dashboard/subViews/home';
+import Demo from '../../Views/Dashboard/subViews/demo';
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;

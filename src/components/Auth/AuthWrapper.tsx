@@ -1,6 +1,6 @@
 import React, { ReactElement, useMemo } from 'react';
 import useAuth from '../../hooks/useAuth';
-import NoAuth from '../../views/common/noAuth';
+import NoAuth from '../../Views/Common/noAuth';
 
 interface AuthProps {
   auth: string | string[];
