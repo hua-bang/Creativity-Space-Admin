@@ -6,3 +6,7 @@ export const login = (username: string, password: string) => {
     password
   });
 }
+
+export const getAdminList = () => {
+  return request('/admin/all');
+}
