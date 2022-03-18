@@ -61,7 +61,7 @@ export const columns: TableColumnProps<User>[] = [
     render: (col) => {
       return (
         <div className={styles['btn-area']}>
-          <Button type='primary'>操作</Button>
+          <Button type='primary'>详情</Button>
           <Button type='primary' status='danger'>禁用</Button>
         </div>
       );

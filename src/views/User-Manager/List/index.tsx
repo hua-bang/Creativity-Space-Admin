@@ -22,7 +22,7 @@ const UserList: React.FC = () => {
   return (
     <div className={styles['user-list-page']}>
       <h3>用户列表</h3>
-      <Table columns={columns} data={userList}/>
+      <Table rowKey='id' columns={columns} data={userList}/>
     </div>
   );
 };

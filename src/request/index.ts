@@ -1,6 +1,7 @@
 import { BASE_URL } from '../config/network';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getToken } from '@/utils/token';
+import { Message } from '@arco-design/web-react';
 
 const service = axios.create({
   baseURL: BASE_URL, // 设置统一的请求前缀
@@ -26,7 +27,10 @@ service.interceptors.response.use(
   },
   (err) => {
     const res = err.response;
-    console.log(err);
+    const { code } = res.data;
+    if (code === 401) {
+      Message.warning('没有权限');
+    }
     throw res.data;
   },
 );
