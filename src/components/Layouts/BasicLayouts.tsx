@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { Layout } from '@arco-design/web-react';
 import './BasicLayout.css';
 import { Route, Routes } from 'react-router-dom';
-import Home from '../../Views/Dashboard/subViews/home';
-import Demo from '../../Views/Dashboard/subViews/demo';
 import MenuNav from './components/Menu-Nav';
 import routes, { RouteConfig } from '@/routes';
+import Headers from './components/Headers';
 
 const Header = Layout.Header;
 const Footer = Layout.Footer;
@@ -26,9 +25,7 @@ const BasicLayout = () => {
     <Layout className='layout-collapse-demo arco-layout-has-sider'>
       <MenuNav />
       <Layout>
-        <Header style={{ paddingLeft: 20 }}>
-          Header
-        </Header>
+        <Headers />
         <Layout style={{ padding: '24px' }}>
           {/* <Breadcrumb style={{ margin: '16px 0', textAlign: 'left' }}>
             <Breadcrumb.Item>Home</Breadcrumb.Item>
