@@ -5,7 +5,6 @@ import routes from './routes';
 import AuthWrapper from './components/Auth/AuthWrapper';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div className="App">
