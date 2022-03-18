@@ -65,3 +65,12 @@
   font-size: 18px;
   font-weight: bold;   
 }
+
+.content {
+  font-stretch: condensed;
+  font-size: 16px;
+  display: flex;
+  text-align: left;
+  box-sizing: border-box;
+  padding: 15px;
+}

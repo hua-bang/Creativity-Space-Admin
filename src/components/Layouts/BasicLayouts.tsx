@@ -35,7 +35,7 @@ const BasicLayout = () => {
             <Breadcrumb.Item>List</Breadcrumb.Item>
             <Breadcrumb.Item>App</Breadcrumb.Item>
           </Breadcrumb> */}
-          <Content>
+          <Content className="content">
             <Routes>
               {
                 routesForBasicLayout.map(route => (
@@ -44,7 +44,7 @@ const BasicLayout = () => {
               }
             </Routes>
           </Content>
-          <Footer>power by @Creativity-Space</Footer>
+          {/* <Footer>power by @Creativity-Space</Footer> */}
         </Layout>
       </Layout>
     </Layout>
