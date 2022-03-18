@@ -1,9 +1,12 @@
 import React from 'react';
-import BasicLayout from '../../components/Layouts/BasicLayouts';
+import styles from './index.module.scss';
+import DataOverview from './components/Data-Overview';
 
 const DashBoard: React.FC = () => {
   return (
-    <div>控制台</div>
+    <div className={styles['dashboard']}>
+      <DataOverview />
+    </div>
   );
 };
 

@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import { Layout } from '@arco-design/web-react';
+import { Breadcrumb, Layout } from '@arco-design/web-react';
 import './BasicLayout.css';
 import { Route, Routes } from 'react-router-dom';
 import MenuNav from './components/Menu-Nav';
 import routes, { RouteConfig } from '@/routes';
 import Headers from './components/Headers';
-
-const Header = Layout.Header;
-const Footer = Layout.Footer;
 const Content = Layout.Content;
 
 const ROUTE_KEY = 'BasicLayout';
