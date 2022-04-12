@@ -66,6 +66,7 @@ const routes: RouteConfig[] = [
     element: <BasicLayout />,
     title: (<><IconBook />小册管理</>),
     routerKey: 'BasicLayout',
+    auth: ['admin', 'super'],
     children: [
       {
         path: 'booklet-list',
@@ -104,6 +105,7 @@ const routes: RouteConfig[] = [
     path: '/admin-manage',
     element: <BasicLayout />,
     routerKey: 'BasicLayout',
+    auth: ['admin', 'super'],
     title: (<><IconMenu />管理员管理</>),
     children: [
       {

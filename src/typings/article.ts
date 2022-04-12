@@ -28,3 +28,12 @@ export interface Article {
   cover_url: string;
   user?: User;
 }
+
+export interface QueryArticleDto {
+  page: number;
+  pageSize: number;
+  status?: ArticleStatusEnum;
+  title?: string;
+  order?: string;
+  order_by?: string;
+}

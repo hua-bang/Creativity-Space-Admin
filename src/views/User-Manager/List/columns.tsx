@@ -1,10 +1,12 @@
-import { User } from '@/typings/user';
+import { User, UserStatus } from '@/typings/user';
 import { Button, TableColumnProps, Tag } from '@arco-design/web-react';
 import Avatar from '@arco-design/web-react/es/Avatar/avatar';
+import { ColumnProps } from '@arco-design/web-react/es/Table';
 import { IconUser } from '@arco-design/web-react/icon';
 import styles from './index.module.scss';
+import { USER_STATUS_MAP } from '@/const/user';
 
-export const columns: TableColumnProps<User>[] = [
+export const columns: ColumnProps<User>[] = [
   {
     title: '用户名',
     dataIndex: 'name',
@@ -31,8 +33,13 @@ export const columns: TableColumnProps<User>[] = [
   }, 
   {
     title: '状态',
-    dataIndex: 'status',
-    align: 'center'
+    align: 'center',
+    render: (_, item) => {
+      const status = USER_STATUS_MAP[item.status as UserStatus];
+      return (
+        <Tag color={status.color}>{status.value}</Tag>
+      );
+    }
   }, 
   {
     title: '职位',
@@ -45,6 +52,18 @@ export const columns: TableColumnProps<User>[] = [
     align: 'center'
   },
   {
+    title: '得到点赞数',
+    dataIndex: 'get_like_count'
+  },
+  {
+    title: '得到游览数',
+    dataIndex: 'get_view_count'
+  },
+  {
+    title: '得到关注数',
+    dataIndex: 'follow_count'
+  },
+  {
     title: '是否小册作者',
     align: 'center',
     render: (_, item) => {
@@ -52,18 +71,6 @@ export const columns: TableColumnProps<User>[] = [
         <Tag color={item.is_booklet_author ? 'arcoblue' : 'red'}>
           {item.is_booklet_author === 1 ? '是' : '否'}
         </Tag>
-      );
-    }
-  },
-  {
-    title: '操作',
-    align: 'center',
-    render: (col) => {
-      return (
-        <div className={styles['btn-area']}>
-          <Button type='primary'>详情</Button>
-          <Button type='primary' status='danger'>禁用</Button>
-        </div>
       );
     }
   }

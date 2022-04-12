@@ -7,3 +7,4 @@ export const getUserList = () => {
 export const getUserCountInfo = () => {
   return request.get('/admin/user/countInfo');
 }
+

@@ -2,8 +2,9 @@ import { Article } from '@/typings/article';
 import { Button, TableColumnProps, Tag } from '@arco-design/web-react';
 import { ARTICLE_STATUS_MAP_KEY, ARTICLE_STATUS_MAP } from '@/const/article';
 import styles from './index.module.scss';
+import { ColumnProps } from '@arco-design/web-react/es/Table';
 
-export const columns: TableColumnProps<Article>[] = [
+export const columns: ColumnProps<Article>[] = [
   {
     title: 'id',
     dataIndex: 'id',
@@ -48,18 +49,5 @@ export const columns: TableColumnProps<Article>[] = [
     title: '累计收藏数',
     align: 'center',
     dataIndex: 'collect_count'
-  },
-  {
-    title: '操作',
-    align: 'center',
-    width: 240,
-    render: (col) => {
-      return (
-        <div className={styles['btn-area']}>
-          <Button type='primary'>详情</Button>
-          <Button type='primary' status='danger'>审核不通过</Button>
-        </div>
-      );
-    }
   }
 ];

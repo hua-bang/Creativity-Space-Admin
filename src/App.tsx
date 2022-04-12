@@ -1,6 +1,9 @@
 import { ReactElement, useEffect, useState } from 'react';
 import { Routes } from 'react-router-dom';
 import './App.css';
+import 'bytemd/dist/index.css';
+import 'highlight.js/styles/vs.css';
+import 'github-markdown-css';
 import routes, { RouteConfig, generateRouter } from './routes';
 import SkeletonPage from './components/Skeleton-Page';
 import { getUserInfo } from '@/api/admin';
