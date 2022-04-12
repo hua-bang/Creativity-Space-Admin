@@ -16,7 +16,7 @@ const generateMenu = (route: RouteConfig, index: string) => {
   }
 
   return (
-    <SubMenu key={index} title={title}>
+    <SubMenu key={index}  title={title}>
       {
         children?.map((child, childIndex) => (
           <MenuItem key={`${index}_${childIndex}`}>
@@ -41,8 +41,8 @@ const MenuNav: React.FC = () => {
     const [index, childrenIndex] = key.split('_');
     const parentRoute = routes[index as any]; 
     const childrenRoute = parentRoute.children ? parentRoute.children[childrenIndex as any] : null;
-    const path = childrenRoute ? parentRoute.path?.replace('/*', '') + childrenRoute.path! : parentRoute.path;
-    navigate(path ?? '/dashBoard/home');
+    const path = childrenRoute ? parentRoute.path?.replace('/*', '') + '/' + childrenRoute.path! : parentRoute.path;
+    navigate(path ?? '/dashBoard/workplace');
   }
 
   return (

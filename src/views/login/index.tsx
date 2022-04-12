@@ -29,9 +29,10 @@ const Login: React.FC = () => {
       Message.success('登录成功');
       const { access_token, userInfo, roles } = res.data;
       setToken(access_token);
+      console.log(userInfo, roles);
       userStore.setUser(userInfo, roles);
       setTimeout(() => {
-        navigate('/dashBoard/home');
+        navigate('/dashBoard/workplace');
       }, 1000);
     }).catch(err => {
       Message.warning(err.Message);

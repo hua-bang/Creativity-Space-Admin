@@ -1,40 +1,40 @@
-import { ReactElement, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { ReactElement, useEffect, useState } from 'react';
+import { Routes } from 'react-router-dom';
 import './App.css';
-import routes from './routes';
-import AuthWrapper from './components/Auth/AuthWrapper';
+import routes, { RouteConfig, generateRouter } from './routes';
+import SkeletonPage from './components/Skeleton-Page';
+import { getUserInfo } from '@/api/admin';
+import useStore from '@/hooks/useStore';
 
 function App() {
 
+  const [hasLoadInfo, setHasLoadInfo] = useState(false);
+
+  const { userStore } = useStore();
+
+  useEffect(() => {
+    getUserInfo().then(res => {
+    userStore.setUser(res.data, res.data.roles);
+    }).finally(() => {
+      setHasLoadInfo(true);
+    });
+  }, []);
+
   return (
     <div className="App">
+      {
+        hasLoadInfo 
+          ? (
+            <Routes>
+              {generateRouter(routes)}
+            </Routes>
+          )
+          : (
+            <SkeletonPage />
+          )
+      }
       <div>
-        <Routes>
-          {
-            routes.map((route, index) => {
-              const { auth, path, element, redirectPath } = route;
-
-              return (
-                <Route 
-                  key={path}
-                  path={path}
-                  element={
-                    auth 
-                    ? (
-                      <AuthWrapper key={path} auth={auth} redirectPath={redirectPath}>
-                        {element as ReactElement<any, any>}
-                      </AuthWrapper>
-                    ) :
-                    element
-                  }
-                />
-              );
-
-              return 
-                
-            })
-          }
-        </Routes>
+      
       </div>
     </div>
   )

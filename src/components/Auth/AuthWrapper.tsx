@@ -1,6 +1,7 @@
 import React, { ReactElement, useMemo } from 'react';
 import useAuth from '../../hooks/useAuth';
 import NoAuth from '../../Views/Common/noAuth';
+import { observer } from 'mobx-react-lite';
 
 interface AuthProps {
   auth: string | string[];
@@ -19,4 +20,4 @@ const AuthWrapper: React.FC<AuthProps> = ({
   return authorized ? children : <NoAuth redirectPath={redirectPath} />;
 }
 
-export default AuthWrapper;
+export default observer(AuthWrapper);

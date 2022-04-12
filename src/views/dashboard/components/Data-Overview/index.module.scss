@@ -1,7 +1,23 @@
 .overview-page {
+  width: 100%;
   &-title {
     padding: 10px;
     font-size: 20px;
     font-weight: bold;
+  }
+
+  &-count-info {
+    margin-top: 10px;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+
+    > div {
+      width: 25%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }

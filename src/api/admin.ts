@@ -10,3 +10,7 @@ export const login = (username: string, password: string) => {
 export const getAdminList = () => {
   return request('/admin/all');
 }
+
+export const getUserInfo = () => {
+  return request('/admin/info');
+}

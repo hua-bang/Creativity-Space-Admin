@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Breadcrumb, Layout } from '@arco-design/web-react';
 import './BasicLayout.css';
-import { Route, Routes } from 'react-router-dom';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import MenuNav from './components/Menu-Nav';
 import routes, { RouteConfig } from '@/routes';
 import Headers from './components/Headers';
@@ -30,13 +30,14 @@ const BasicLayout = () => {
             <Breadcrumb.Item>App</Breadcrumb.Item>
           </Breadcrumb> */}
           <Content className="content">
-            <Routes>
+            {/* <Routes>
               {
                 routesForBasicLayout.map(route => (
                   <Route path={route.path} key={route.path} element={route.element} />   
                 ))
               }
-            </Routes>
+            </Routes> */}
+            <Outlet />
           </Content>
           {/* <Footer>power by @Creativity-Space</Footer> */}
         </Layout>
