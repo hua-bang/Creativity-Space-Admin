@@ -1,0 +1,134 @@
+import React, { ReactElement, useEffect, useState } from 'react';
+import { ColumnProps } from '@arco-design/web-react/es/Table';
+import { Button, Form, Input, Message, PaginationProps, Select, Table } from '@arco-design/web-react';
+import { AxiosResponse } from 'axios';
+
+interface FormColumnType {
+  id: string;
+  render: () => ReactElement;
+}
+
+type ParamsProps = {
+  page: number;
+  pageSize: number;
+  [key: string]: any;
+};
+
+interface ResponseData<T> {
+  list: T[];
+  pagination: {
+    total: number;
+    page: number;
+    pageSize: number;
+  }
+}
+
+interface ProTableProps<
+  T, 
+  ParamsData extends ParamsProps,
+  FormData = Partial<ParamsData>,
+> {
+  columns: ColumnProps<T>[];
+  formColumns: Array<FormColumnType>;
+  requestFn?: (params: ParamsData) => Promise<AxiosResponse<ResponseData<T>>>;
+  onFormChange?: (data: FormData) => void;
+  rowKey?: string;
+}
+
+const defaultParams = {
+  page: 1,
+  pageSize: 5,
+};
+
+const FormItem = Form.Item;
+
+function ProTable<
+  T extends Record<string, any> = Record<string, any>, 
+  ParamsData extends ParamsProps = ParamsProps,
+  FormData = Partial<ParamsData>
+> (props: ProTableProps<T, ParamsData>) {
+
+  const {
+    rowKey = 'id',
+    columns, 
+    formColumns,
+    onFormChange,
+    requestFn
+  } = props;
+
+  const [data, setData] = useState<T[]>([]);
+  const [params, setParams] = useState<ParamsData>({...defaultParams} as unknown as ParamsData);
+  const [total, setTotal] = useState<number>(0);
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (pagination: PaginationProps) => {
+    const { current = 1 } = pagination;
+    setParams(prev => ({
+      ...prev,
+      page: current,
+    }))
+  }
+  
+  const handleSubmit = (data: FormData) => {
+    setParams(prev => ({
+      ...prev,
+      ...data,
+      page: 1
+    }))
+    onFormChange && onFormChange(data);
+  }
+
+  const request = (params: ParamsData) => {
+    if (requestFn) {
+      setLoading(true);
+      requestFn(params)
+        .then(res => {
+          const { list, pagination } = res.data;
+          setData(list);
+          setTotal(pagination.total)
+        }).catch(err => {
+          Message.warning(err.message);
+        }).finally(() => {
+          setLoading(false);
+        });
+    }
+  }
+
+  const reset = () => {
+    setParams({...defaultParams} as unknown as ParamsData);
+  }
+
+  useEffect(() => {
+    request(params);
+  }, [params]);
+
+  return (
+    <div>
+      <div style={{ padding: '5px' }}>
+        <Form<FormData> layout='inline' onSubmit={handleSubmit}>
+          {
+            formColumns.map(item => (
+              <React.Fragment key={item.id}>
+                {item.render()}
+              </React.Fragment>
+            ))
+          }
+          <FormItem>
+            <Button type='primary' htmlType='submit'>搜索</Button>
+            <Button type='primary' onClick={reset}>重置</Button>
+          </FormItem>
+        </Form>
+      </div>
+      <Table<T>
+        loading={loading}
+        onChange={handleChange}
+        rowKey={rowKey} 
+        data={data}
+        columns={columns} 
+        pagination={{ total, current: params.page, pageSize: params.pageSize }}
+      />
+    </div>
+  );
+}
+
+export default ProTable;

@@ -17,3 +17,13 @@ export interface Point {
   tags_id?: string;
   status: PointStatusEnum;
 }
+
+
+export interface QueryPointDto {
+  page: number;
+  pageSize: number;
+  status?: PointStatusEnum;
+  content?: string;
+  order?: string;
+  order_by?: string;
+}
