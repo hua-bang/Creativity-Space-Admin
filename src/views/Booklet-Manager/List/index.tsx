@@ -1,8 +1,11 @@
+import { auditBooklet } from '@/api/audit';
 import { getBookletList } from '@/api/booklet';
+import AuditModal from '@/components/Audit-Modal';
 import { CLIENT_URL } from '@/config/client';
 import { BOOKLET_STATUS_MAP, BOOKLET_STATUS_MAP_KEY } from '@/const/booklet';
-import { Booklet, QueryBookletDto } from '@/typings/booklet';
-import { Form, PaginationProps, Table, Input, Button, Select } from '@arco-design/web-react';
+import { AuditTypeEnum } from '@/typings/audit';
+import { Booklet, BookletStatusEnum, QueryBookletDto } from '@/typings/booklet';
+import { Form, PaginationProps, Table, Input, Button, Select, Message } from '@arco-design/web-react';
 import { ColumnProps } from '@arco-design/web-react/es/Table';
 import React, { useEffect, useState } from 'react';
 import { columns as defaultColumn } from './columns';
@@ -22,6 +25,8 @@ const BookletList: React.FC = () => {
   const [params, setParams] = useState<QueryBookletDto>({...defaultParams});
   const [total, setTotal] = useState<number>(0);
 
+  const [form] = Form.useForm();
+
   const loadData = (params: QueryBookletDto) => {
     getBookletList(params).then((res) => {
       const {list, pagination} = res.data;
@@ -30,6 +35,7 @@ const BookletList: React.FC = () => {
     });
   }
 
+  
   const handleChange = (pagination: PaginationProps) => {
     const { current = 1 } = pagination;
     setParams(prev => ({
@@ -54,16 +60,31 @@ const BookletList: React.FC = () => {
     window.open(`${CLIENT_URL}/booklet/detail/${id}`)
   }
 
+  const audit = (id: string, status: BookletStatusEnum, index: number) => {
+    AuditModal.open({
+      id,
+      status,
+      type: AuditTypeEnum.POINT,
+      requestFn: auditBooklet,
+      onSuccess() {
+        booklets[index].status = status;
+        setBooklets(prev => [...prev]);
+        Message.success('操作成功');
+      }
+    });
+  }
+
   const operateColumns: ColumnProps<Booklet>[] = [
     {
       title: '操作',
       align: 'center',
-      width: 240,
-      render: (col: unknown, record: Booklet) => {
+      width: 340,
+      render: (col: unknown, record: Booklet, index) => {
         return (
           <div className={styles['btn-area']}>
-            <Button type='primary' onClick={() => toBookletDetail(record.id)}>详情</Button>
-            <Button type='primary' status='danger'>审核不通过</Button>
+            <Button  onClick={() => toBookletDetail(record.id)}>详情</Button>
+            <Button  type="primary" onClick={() => audit(record.id, BookletStatusEnum.NORMAL, index)}>审核通过</Button>
+            <Button type='primary' status='danger' onClick={() => audit(record.id, BookletStatusEnum.FORBIDDEN, index) }>审核不通过</Button>
           </div>
         );
       }
@@ -72,11 +93,16 @@ const BookletList: React.FC = () => {
 
   const columns = [...defaultColumn, ...operateColumns];
 
+  const reset = () => {
+    setParams({...defaultParams});
+    form.resetFields();
+  }
+
   return (
     <div>
       <h3>小册列表</h3>
       <div style={{ padding: '5px' }}>
-        <Form layout='inline' onSubmit={handleSubmit}>
+        <Form form={form} layout='inline' onSubmit={handleSubmit}>
           <FormItem label='小册名称' field='name'>
             <Input style={{ width: 270 }} placeholder='请输入小册名称' />
           </FormItem>
@@ -93,7 +119,8 @@ const BookletList: React.FC = () => {
             </Select>
           </FormItem>
           <FormItem>
-            <Button type='primary' htmlType='submit'>搜索</Button>
+            <Button style={{ marginRight: '10px' }} type='primary' htmlType='submit'>搜索</Button>
+            <Button onClick={() => reset()} >重置</Button>
           </FormItem>
         </Form>
       </div>

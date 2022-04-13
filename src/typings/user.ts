@@ -20,3 +20,14 @@ export interface User {
   follow_count: number;
   followed_count: number;
 }
+
+export interface QueryUserDto {
+  id?: string;
+  page: number;
+  pageSize: number;
+  status?: number;
+  name?: string;
+  username?: string;
+  order?: string;
+  order_by?: string;
+}

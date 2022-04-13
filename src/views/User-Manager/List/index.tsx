@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { User, UserStatus } from '@/typings/user';
-import { getUserList } from '@/api/user';
+import { getUserList, queryUser } from '@/api/user';
 import { Button, Input, Message, Modal, Table } from '@arco-design/web-react';
 import styles from './index.module.scss';
 import { columns as defaultColumns} from './columns';
@@ -8,6 +8,8 @@ import { ColumnProps } from '@arco-design/web-react/es/Table';
 import { CLIENT_URL } from '@/config/client';
 import { auditUser } from '@/api/audit';
 import { AuditTypeEnum } from '@/typings/audit';
+import ProTable from '@/components/Pro-Table';
+import { formColumns } from './form';
 
 const UserList: React.FC = () => {
 
@@ -39,12 +41,6 @@ const UserList: React.FC = () => {
         })
       }
     })
-  }
-
-  const loadData = () => {
-    getUserList().then(res => {
-      setUserList(res.data);
-    });
   }
 
   const toUserDetail = (id: string) => {
@@ -87,14 +83,21 @@ const UserList: React.FC = () => {
 
   const columns = [...defaultColumns, ...operateColumns];
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  const handleDataChange = (data: User[]) => {
+    setUserList(data);
+  }
   
   return (
     <div className={styles['user-list-page']}>
       <h3>用户列表</h3>
-      <Table rowKey='id' columns={columns} data={userList}/>
+      <ProTable
+        columns={columns}
+        formColumns={formColumns}
+        requestFn={queryUser}
+        data={userList}
+        onDataChange={handleDataChange}
+      />
+      {/* <Table rowKey='id' columns={columns} data={userList}/> */}
     </div>
   );
 };

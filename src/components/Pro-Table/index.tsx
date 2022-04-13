@@ -33,6 +33,8 @@ interface ProTableProps<
   requestFn?: (params: ParamsData) => Promise<AxiosResponse<ResponseData<T>>>;
   onFormChange?: (data: FormData) => void;
   rowKey?: string;
+  data?: T[];
+  onDataChange?: (data: T[]) => void;
 }
 
 const defaultParams = {
@@ -45,7 +47,7 @@ const FormItem = Form.Item;
 function ProTable<
   T extends Record<string, any> = Record<string, any>, 
   ParamsData extends ParamsProps = ParamsProps,
-  FormData = Partial<ParamsData>
+  FormData = Partial<ParamsData>,
 > (props: ProTableProps<T, ParamsData>) {
 
   const {
@@ -53,13 +55,15 @@ function ProTable<
     columns, 
     formColumns,
     onFormChange,
-    requestFn
+    requestFn,
+    data = [],
+    onDataChange
   } = props;
 
-  const [data, setData] = useState<T[]>([]);
   const [params, setParams] = useState<ParamsData>({...defaultParams} as unknown as ParamsData);
   const [total, setTotal] = useState<number>(0);
   const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm<FormData>();
 
   const handleChange = (pagination: PaginationProps) => {
     const { current = 1 } = pagination;
@@ -84,7 +88,7 @@ function ProTable<
       requestFn(params)
         .then(res => {
           const { list, pagination } = res.data;
-          setData(list);
+          onDataChange && onDataChange(list);
           setTotal(pagination.total)
         }).catch(err => {
           Message.warning(err.message);
@@ -96,6 +100,7 @@ function ProTable<
 
   const reset = () => {
     setParams({...defaultParams} as unknown as ParamsData);
+    form.resetFields();
   }
 
   useEffect(() => {
@@ -105,7 +110,7 @@ function ProTable<
   return (
     <div>
       <div style={{ padding: '5px' }}>
-        <Form<FormData> layout='inline' onSubmit={handleSubmit}>
+        <Form<FormData> form={form} layout='inline' onSubmit={handleSubmit}>
           {
             formColumns.map(item => (
               <React.Fragment key={item.id}>
@@ -114,8 +119,8 @@ function ProTable<
             ))
           }
           <FormItem>
-            <Button type='primary' htmlType='submit'>搜索</Button>
-            <Button type='primary' onClick={reset}>重置</Button>
+            <Button type='primary' style={{ marginRight:'10px' }} htmlType='submit'>搜索</Button>
+            <Button onClick={reset}>重置</Button>
           </FormItem>
         </Form>
       </div>

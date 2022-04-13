@@ -21,7 +21,7 @@ const AdminList: React.FC = () => {
   
   return (
     <div className={styles['article-list-page']}>
-      <h3>文章列表</h3>
+      <h3>管理员列表</h3>
       <Table rowKey='id' columns={columns} data={adminList}/>
     </div>
   );

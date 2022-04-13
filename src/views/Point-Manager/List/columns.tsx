@@ -3,8 +3,9 @@ import { Button, TableColumnProps, Tag } from '@arco-design/web-react';
 import styles from './index.module.scss';
 import { POINT_STATUS_MAP, POINT_STATUS_MAP_KEY } from '@/const/point';
 import { Point } from '@/typings/point';
+import { ColumnProps } from '@arco-design/web-react/es/Table';
 
-export const columns: TableColumnProps<Point>[] = [
+export const columns: ColumnProps<Point>[] = [
   {
     title: 'id',
     dataIndex: 'id',
@@ -39,18 +40,5 @@ export const columns: TableColumnProps<Point>[] = [
     title: '累计评论数',
     dataIndex: 'comment_count',
     align: 'center'
-  },
-  {
-    title: '操作',
-    align: 'center',
-    width: 240,
-    render: (col) => {
-      return (
-        <div className={styles['btn-area']}>
-          <Button type='primary'>详情</Button>
-          <Button type='primary' status='danger'>审核不通过</Button>
-        </div>
-      );
-    }
   }
 ];
