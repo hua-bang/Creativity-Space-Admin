@@ -5,11 +5,12 @@ import { CLIENT_URL } from '@/config/client';
 import { BOOKLET_STATUS_MAP, BOOKLET_STATUS_MAP_KEY } from '@/const/booklet';
 import { AuditTypeEnum } from '@/typings/audit';
 import { Booklet, BookletStatusEnum, QueryBookletDto } from '@/typings/booklet';
-import { Form, PaginationProps, Table, Input, Button, Select, Message } from '@arco-design/web-react';
+import { Form, PaginationProps, Table, Input, Button, Select, Message, Modal, Empty } from '@arco-design/web-react';
 import { ColumnProps } from '@arco-design/web-react/es/Table';
 import React, { useEffect, useState } from 'react';
 import { columns as defaultColumn } from './columns';
 import styles from './index.module.scss';
+import ArticleList from '../Article-List';
 
 const defaultParams = {
   page: 1,
@@ -24,6 +25,8 @@ const BookletList: React.FC = () => {
   const [booklets, setBooklets] = useState<Booklet[]>([]);
   const [params, setParams] = useState<QueryBookletDto>({...defaultParams});
   const [total, setTotal] = useState<number>(0);
+  const [selectBooklet, setSelectBooklet] = useState<Booklet>(); 
+  const [modalVisible, setModalVisible] = useState(false);
 
   const [form] = Form.useForm();
 
@@ -74,6 +77,16 @@ const BookletList: React.FC = () => {
     });
   }
 
+  useEffect(() => {
+    if (booklets.length > 0) {
+      setSelectBooklet(booklets[0]);
+    }
+  }, [booklets]);
+
+  useEffect(() => {
+    selectBooklet && setModalVisible(true);
+  }, [selectBooklet]);
+
   const operateColumns: ColumnProps<Booklet>[] = [
     {
       title: '操作',
@@ -82,7 +95,7 @@ const BookletList: React.FC = () => {
       render: (col: unknown, record: Booklet, index) => {
         return (
           <div className={styles['btn-area']}>
-            <Button  onClick={() => toBookletDetail(record.id)}>详情</Button>
+            <Button  onClick={() => setSelectBooklet({...record})}>详情</Button>
             <Button  type="primary" onClick={() => audit(record.id, BookletStatusEnum.NORMAL, index)}>审核通过</Button>
             <Button type='primary' status='danger' onClick={() => audit(record.id, BookletStatusEnum.FORBIDDEN, index) }>审核不通过</Button>
           </div>
@@ -131,6 +144,23 @@ const BookletList: React.FC = () => {
         data={booklets}
         pagination={{ total, current: params.page, pageSize: params.pageSize }}
       />
+      <Modal
+        style={{
+          width: '70%'
+        }}
+        visible={modalVisible}
+        title={selectBooklet?.name}
+        closable
+        onCancel={() => setModalVisible(false)}
+      >
+        {
+          selectBooklet ? (
+            <ArticleList bookletId={selectBooklet.id} />
+          ) : (
+            <Empty />
+          )
+        }
+      </Modal>
     </div>
   );
 };

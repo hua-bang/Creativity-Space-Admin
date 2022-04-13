@@ -30,15 +30,16 @@ interface ProTableProps<
 > {
   columns: ColumnProps<T>[];
   customToolsArea?: ReactElement;
-  formColumns: Array<FormColumnType>;
+  formColumns?: Array<FormColumnType>;
   requestFn?: (params: ParamsData) => Promise<AxiosResponse<ResponseData<T>>>;
   onFormChange?: (data: FormData) => void;
   rowKey?: string;
   data?: T[];
   onDataChange?: (data: T[]) => void;
+  defaultParams?: Partial<ParamsData>;
 }
 
-const defaultParams = {
+const initParams = {
   page: 1,
   pageSize: 5,
 };
@@ -59,13 +60,18 @@ function ProTable<
     requestFn,
     data = [],
     onDataChange,
-    customToolsArea
+    customToolsArea,
+    defaultParams
   } = props;
 
-  const [params, setParams] = useState<ParamsData>({...defaultParams} as unknown as ParamsData);
+  const [params, setParams] = useState<ParamsData>({
+    ...initParams,
+    ...defaultParams
+  } as unknown as ParamsData);
   const [total, setTotal] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm<FormData>();
+  const [isMounted, setIsMounted] = useState(false); 
 
   const handleChange = (pagination: PaginationProps) => {
     const { current = 1 } = pagination;
@@ -109,22 +115,39 @@ function ProTable<
     request(params);
   }, [params]);
 
+  useEffect(() => {
+    if (isMounted) {
+      if (defaultParams) {
+        setParams(prev => ({
+          ...prev,
+          ...defaultParams
+        }));
+      }
+    } else {
+      setIsMounted(true);
+    }
+  }, [defaultParams]);
+
   return (
     <div>
       <div style={{ padding: '5px' }}>
-        <Form<FormData> form={form} layout='inline' onSubmit={handleSubmit}>
-          {
-            formColumns.map(item => (
-              <React.Fragment key={item.id}>
-                {item.render()}
-              </React.Fragment>
-            ))
-          }
-          <FormItem>
-            <Button type='primary' style={{ marginRight:'10px' }} htmlType='submit'>搜索</Button>
-            <Button onClick={reset}>重置</Button>
-          </FormItem>
-        </Form>
+        {
+          formColumns && (
+            <Form<FormData> form={form} layout='inline' onSubmit={handleSubmit}>
+              {
+                formColumns.map(item => (
+                  <React.Fragment key={item.id}>
+                    {item.render()}
+                  </React.Fragment>
+                ))
+              }
+              <FormItem>
+                <Button type='primary' style={{ marginRight:'10px' }} htmlType='submit'>搜索</Button>
+                <Button onClick={reset}>重置</Button>
+              </FormItem>
+            </Form>
+          )
+        }
       </div>
       { 
         customToolsArea && (

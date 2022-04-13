@@ -6,6 +6,7 @@ export enum AuditTypeEnum {
   TAG = 5,
   POINT_TAG = 6,
   ADMIN = 7,
+  BOOKLET_ARTICLE = 8
 }
 
 
