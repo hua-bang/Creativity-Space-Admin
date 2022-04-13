@@ -78,12 +78,6 @@ const BookletList: React.FC = () => {
   }
 
   useEffect(() => {
-    if (booklets.length > 0) {
-      setSelectBooklet(booklets[0]);
-    }
-  }, [booklets]);
-
-  useEffect(() => {
     selectBooklet && setModalVisible(true);
   }, [selectBooklet]);
 

@@ -1,10 +1,11 @@
 import { auditBookletArticle } from '@/api/audit';
 import { getArticleByBookletId } from '@/api/booklet-article';
 import AuditModal from '@/components/Audit-Modal';
+import MarkdownView from '@/components/Markdown-View';
 import ProTable from '@/components/Pro-Table';
 import { AuditTypeEnum } from '@/typings/audit';
 import { BookletArticle, BookletArticleStatusEnum } from '@/typings/booklet-article';
-import { Button, Message } from '@arco-design/web-react';
+import { Button, Drawer, Message } from '@arco-design/web-react';
 import { ColumnProps } from '@arco-design/web-react/es/Table';
 import React, { useEffect, useState } from 'react';
 import { columns as defaultColumns } from './columns';
@@ -21,6 +22,8 @@ const ArticleList: React.FC<ArticleListProps> = ({
     booklet_id: bookletId,
     order_by: 'order'
   });
+  const [article, setArticle] = useState<BookletArticle>();
+  const [drawVisible, setDrawVisible] = useState(false);
 
   const handleDataChange = (data: BookletArticle[]) => {
     setArticles(data);
@@ -48,7 +51,7 @@ const ArticleList: React.FC<ArticleListProps> = ({
       render(_:unknown, record, index) {
         return (
           <div>
-            <Button style={{ marginRight: '10px' }}>
+            <Button style={{ marginRight: '10px' }} onClick={() => setArticle({...record})}>
               查看文章
             </Button>
             <Button 
@@ -59,7 +62,6 @@ const ArticleList: React.FC<ArticleListProps> = ({
               审核通过
             </Button>
             <Button type="primary" status='danger' disabled={record.status === BookletArticleStatusEnum.DRAFT}
-          
               onClick={() => { audit(record.id, BookletArticleStatusEnum.UNAUDITED, index); }}
             >
               审核不通过
@@ -79,6 +81,12 @@ const ArticleList: React.FC<ArticleListProps> = ({
     }))
   }, [bookletId]);
 
+  useEffect(() => {
+    if (article) {
+      setDrawVisible(true);
+    }
+  }, [article]);
+
 
   return (
     <div>
@@ -89,6 +97,11 @@ const ArticleList: React.FC<ArticleListProps> = ({
         data={articles}
         onDataChange={handleDataChange}
       />
+      <Drawer footer={null} width={600} visible={drawVisible} title={article?.title} onCancel={() => setDrawVisible(false)}>
+        <div style={{ padding: '10px' }}>
+          <MarkdownView value={article ? article.content : ''} />
+        </div>
+      </Drawer>
     </div>
   );
 }
