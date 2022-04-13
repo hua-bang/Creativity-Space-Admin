@@ -29,6 +29,7 @@ interface ProTableProps<
   FormData = Partial<ParamsData>,
 > {
   columns: ColumnProps<T>[];
+  customToolsArea?: ReactElement;
   formColumns: Array<FormColumnType>;
   requestFn?: (params: ParamsData) => Promise<AxiosResponse<ResponseData<T>>>;
   onFormChange?: (data: FormData) => void;
@@ -57,7 +58,8 @@ function ProTable<
     onFormChange,
     requestFn,
     data = [],
-    onDataChange
+    onDataChange,
+    customToolsArea
   } = props;
 
   const [params, setParams] = useState<ParamsData>({...defaultParams} as unknown as ParamsData);
@@ -124,6 +126,13 @@ function ProTable<
           </FormItem>
         </Form>
       </div>
+      { 
+        customToolsArea && (
+          <div style={{ paddingBottom: '10px' }}>
+            {customToolsArea}
+          </div>
+        )
+      }
       <Table<T>
         loading={loading}
         onChange={handleChange}

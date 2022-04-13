@@ -16,3 +16,11 @@ export const auditPoint = (updateAuditStatusDto: UpdateAuditStatusDto) => {
 export const auditBooklet = (updateAuditStatusDto: UpdateAuditStatusDto) => {
   return request.post('/admin/booklet/audit', updateAuditStatusDto);
 };
+
+export const auditTag = (updateAuditStatusDto: UpdateAuditStatusDto) => {
+  return request.post('/admin/tag/audit', updateAuditStatusDto);
+};
+
+export const auditPointTag = (updateAuditStatusDto: UpdateAuditStatusDto) => {
+  return request.post('/admin/point-tag/audit', updateAuditStatusDto);
+};

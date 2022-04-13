@@ -10,6 +10,9 @@ import ArticleList from "@/Views/Article-Manager/List";
 import PointList from "@/Views/Point-Manager/List";
 import AdminList from "@/Views/Admin-Manager/List";
 import AuthWrapper from "@/components/Auth/AuthWrapper";
+import TagList from '@/Views/Article-Manager/Tag';
+import PointTagList from '@/Views/Point-Manager/Tag';
+
 
 export interface RouteConfig extends RouteObject {
   auth?: string | string[];
@@ -85,6 +88,11 @@ const routes: RouteConfig[] = [
         path: 'article-list',
         title: '文章列表',
         element: <ArticleList />
+      },
+      {
+        path: 'tag-list',
+        title: '标签管理',
+        element: <TagList />
       }
     ]
   },
@@ -98,6 +106,11 @@ const routes: RouteConfig[] = [
         path: 'point-list',
         title: '动态列表',
         element: <PointList />
+      },
+      {
+        path: 'tag-list',
+        title: '标签管理',
+        element: <PointTagList />
       }
     ]
   },  

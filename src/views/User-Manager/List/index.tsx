@@ -97,7 +97,6 @@ const UserList: React.FC = () => {
         data={userList}
         onDataChange={handleDataChange}
       />
-      {/* <Table rowKey='id' columns={columns} data={userList}/> */}
     </div>
   );
 };

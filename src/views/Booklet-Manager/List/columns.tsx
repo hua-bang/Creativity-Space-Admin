@@ -4,7 +4,7 @@ import { ARTICLE_STATUS_MAP_KEY, ARTICLE_STATUS_MAP } from '@/const/article';
 import styles from './index.module.scss';
 import { Booklet, BookletStatusEnum } from '@/typings/booklet';
 import { BOOKLET_STATUS_MAP, BOOKLET_STATUS_MAP_KEY } from '@/const/booklet';
-
+import UserAvatarItem from '@/components/User-Avatar-item';
 export const columns: TableColumnProps<Booklet>[] = [
   {
     title: 'id',
@@ -13,8 +13,11 @@ export const columns: TableColumnProps<Booklet>[] = [
   },
   {
     title: '用户',
-    dataIndex: 'user_id',
-    align: 'center'
+    render: (_, item) => {
+      return (
+        <UserAvatarItem user={item.user} />
+      );
+    }
   },
   {
     title: '小册名',

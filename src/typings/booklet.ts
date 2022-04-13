@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export enum BookletStatusEnum {
   FORBIDDEN = -1,
   REJECTED = -2,
@@ -21,6 +23,8 @@ export interface Booklet {
   status: BookletStatusEnum;
 
   cover_url: string;
+
+  user: User;
 }
 
 export interface QueryBookletDto {

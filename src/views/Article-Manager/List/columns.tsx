@@ -3,12 +3,21 @@ import { Button, TableColumnProps, Tag } from '@arco-design/web-react';
 import { ARTICLE_STATUS_MAP_KEY, ARTICLE_STATUS_MAP } from '@/const/article';
 import styles from './index.module.scss';
 import { ColumnProps } from '@arco-design/web-react/es/Table';
+import UserAvatarItem from '@/components/User-Avatar-item';
 
 export const columns: ColumnProps<Article>[] = [
   {
     title: 'id',
     dataIndex: 'id',
     align: 'center'
+  },
+  {
+    title: '用户',
+    render(col: unknown, record) {
+      return (
+        <UserAvatarItem user={record.user!} />
+      );
+    }
   },
   {
     title: '标题',
