@@ -3,26 +3,27 @@ import styles from './index.module.scss';
 import { Table } from '@arco-design/web-react';
 import { columns } from './columns';
 import { Admin } from '@/typings/admin';
-import { getAdminList } from '@/api/admin';
+import { getAdminList, queryAdminList } from '@/api/admin';
+import ProTable from '@/components/Pro-Table';
+import { formColumns } from './form';
 
 const AdminList: React.FC = () => {
   const [adminList, setAdminList] = useState<Admin[]>([]);
   
-  const loadData = () => {
-    getAdminList().then(res => {
-      setAdminList(res.data);
-    });
+  const handleDataChange = (data: Admin[]) => {
+    setAdminList(data);
   }
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
   
   return (
     <div className={styles['article-list-page']}>
       <h3>管理员列表</h3>
-      <Table rowKey='id' columns={columns} data={adminList}/>
+      <ProTable 
+        formColumns={formColumns}
+        requestFn={queryAdminList}
+        columns={columns}
+        data={adminList}
+        onDataChange={handleDataChange}
+      />
     </div>
   );
 };

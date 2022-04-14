@@ -1,3 +1,4 @@
+import { QueryAdminDto } from './../typings/admin';
 import request from '@/request';
 
 export const login = (username: string, password: string) => {
@@ -13,4 +14,8 @@ export const getAdminList = () => {
 
 export const getUserInfo = () => {
   return request('/admin/info');
+}
+
+export const queryAdminList = (queryAdminDto: QueryAdminDto) => {
+  return request.post('/admin/query', queryAdminDto);
 }

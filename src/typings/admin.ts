@@ -4,7 +4,6 @@ export enum AdminStatusEnum {
 }
 
 export enum AdminRoleEnum {
-  OPERATOR = 1,
   NORMAL = 2,
   SUPER = 3,
 }
@@ -23,4 +22,16 @@ export interface Admin {
   status: AdminStatusEnum;
 
   role: AdminRoleEnum;
+}
+
+export interface QueryAdminDto {
+  id?: string;
+  page: number;
+  pageSize: number;
+  status?: AdminStatusEnum;
+  name?: string;
+  role?: AdminRoleEnum;
+  username?: string;
+  order?: string;
+  order_by?: string;
 }
