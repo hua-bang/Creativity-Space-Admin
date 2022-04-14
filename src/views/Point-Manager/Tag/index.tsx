@@ -68,6 +68,7 @@ const TagList = () => {
       content: (
         <Add />
       ),
+      footer: null,
       okButtonProps: {
         style: {
           display: 'none'

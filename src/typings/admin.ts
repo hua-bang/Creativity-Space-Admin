@@ -35,3 +35,11 @@ export interface QueryAdminDto {
   order?: string;
   order_by?: string;
 }
+
+export interface CreateAdminDto {
+  username: string;
+  password: string;
+  avatar: string;
+  name: string;
+  role: AdminRoleEnum;
+}

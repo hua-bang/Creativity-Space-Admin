@@ -41,7 +41,7 @@ const routes: RouteConfig[] = [
         path: 'workplace',
         title: '控制台',
         element:<DashBoard />,
-        auth: ['admin', 'super'],
+        auth: ['normal', 'super'],
       }
     ],
   },
@@ -69,7 +69,7 @@ const routes: RouteConfig[] = [
     element: <BasicLayout />,
     title: (<><IconBook />小册管理</>),
     routerKey: 'BasicLayout',
-    auth: ['admin', 'super'],
+    auth: ['normal', 'super'],
     children: [
       {
         path: 'booklet-list',

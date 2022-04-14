@@ -2,6 +2,8 @@ import { Button, Image, TableColumnProps, Tag } from '@arco-design/web-react';
 import { ADMIN_STATUS_MAP_KEY, ADMIN_STATUS_MAP, ADMIN_ROLE_MAP, ADMIN_ROLE_MAP_KEY } from '@/const/admin';
 import styles from './index.module.scss';
 import { Admin, AdminRoleEnum } from '@/typings/admin';
+import Avatar from '@arco-design/web-react/es/Avatar/avatar';
+import { IconUser } from '@arco-design/web-react/icon';
 
 export const columns: TableColumnProps<Admin>[] = [
   {
@@ -18,7 +20,16 @@ export const columns: TableColumnProps<Admin>[] = [
     title: '用户头像',
     render(_: unknown, record) {
       return (
-        <Image src={record.avatar} width="80" />
+        <Avatar>
+          {
+            record.avatar ? (
+              <img src={record.avatar} />
+            ) : (
+              <IconUser />
+            )
+          }  
+        </Avatar>
+        
       );
     }
   },
@@ -43,19 +54,6 @@ export const columns: TableColumnProps<Admin>[] = [
       const status = ADMIN_ROLE_MAP[item.role as ADMIN_ROLE_MAP_KEY];
       return (
         <Tag color={status.color}>{status.value}</Tag>
-      );
-    }
-  },
-  {
-    title: '操作',
-    align: 'center',
-    width: 240,
-    render: (col) => {
-      return (
-        <div className={styles['btn-area']}>
-          <Button type='primary'>详情</Button>
-          <Button type='primary' status='danger'>禁用</Button>
-        </div>
       );
     }
   }

@@ -28,3 +28,7 @@ export const auditPointTag = (updateAuditStatusDto: UpdateAuditStatusDto) => {
 export const auditBookletArticle = (updateAuditStatusDto: UpdateAuditStatusDto) => {
   return request.post('/admin/booklet-article/audit', updateAuditStatusDto);
 };
+
+export const auditAdmin = (updateAuditStatusDto: UpdateAuditStatusDto) => {
+  return request.post('/admin/admin/audit', updateAuditStatusDto);
+};
