@@ -9,9 +9,23 @@
   &-count-info {
     margin-top: 10px;
     width: 100%;
-    height: 80px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+  }
+}
+
+.overview-page-recommend-info {
+  margin-top: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+
+  > div {
+    width: 25%;
+    box-sizing: border-box;
+    margin: 0 5px;
   }
 }

@@ -3,6 +3,10 @@ import useStore from '@/hooks/useStore';
 import { observer } from 'mobx-react-lite';
 import styles from './index.module.scss';
 import CountInfo from './components/Count-Info';
+import AuthorList from '@/components/Author-List';
+import ContentList from '@/components/Content-List';
+import PointList from '@/components/Point-List';
+import BookletRecommendList from '@/components/Booklet-Recommend-List';
 
 const DataOverview: React.FC = () => {
 
@@ -17,6 +21,12 @@ const DataOverview: React.FC = () => {
       </div>
       <div className={styles['overview-page-count-info']}>
         <CountInfo />
+      </div>
+      <div className={styles['overview-page-recommend-info']}>
+        <AuthorList />
+        <ContentList />
+        <PointList />
+        <BookletRecommendList />
       </div>
     </div>
   );

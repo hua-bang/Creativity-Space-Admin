@@ -48,7 +48,6 @@ const MenuNav: React.FC = () => {
   return (
     <Sider collapsed={collapsed} onCollapse={handleCollapsed} collapsible trigger={collapsed ? <IconCaretRight /> : <IconCaretLeft />} breakpoint='xl'>
       <div className='logo-area'>
-        <img src='https://isluo.com/work/admin/assets/logo.f16d.png' style={{ width: '35px' }}/>
         <span>Admin</span>
       </div>
       <Menu

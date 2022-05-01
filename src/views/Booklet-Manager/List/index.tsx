@@ -89,9 +89,15 @@ const BookletList: React.FC = () => {
       render: (col: unknown, record: Booklet, index) => {
         return (
           <div className={styles['btn-area']}>
-            <Button  onClick={() => setSelectBooklet({...record})}>详情</Button>
-            <Button  type="primary" onClick={() => audit(record.id, BookletStatusEnum.NORMAL, index)}>审核通过</Button>
-            <Button type='primary' status='danger' onClick={() => audit(record.id, BookletStatusEnum.FORBIDDEN, index) }>审核不通过</Button>
+            <Button disabled={record.status !== BookletStatusEnum.NORMAL} onClick={() => setSelectBooklet({...record})}>详情</Button>
+            {
+              record.status !== BookletStatusEnum.REJECTED && (
+                <>
+                  <Button  type="primary" onClick={() => audit(record.id, BookletStatusEnum.NORMAL, index)}>审核通过</Button>
+                  <Button type='primary' status='danger' onClick={() => audit(record.id, BookletStatusEnum.FORBIDDEN, index) }>审核不通过</Button>   
+                </>
+              )
+            }
           </div>
         );
       }
