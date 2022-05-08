@@ -4,7 +4,7 @@ import Avatar from '@arco-design/web-react/es/Avatar/avatar';
 import { ColumnProps } from '@arco-design/web-react/es/Table';
 import { IconUser } from '@arco-design/web-react/icon';
 import styles from './index.module.scss';
-import { USER_STATUS_MAP } from '@/const/user';
+import { USER_STATUS_MAP, USER_BOOKLET_MAP, USER_BOOKLET_MAP_KEY } from '@/const/user';
 
 export const columns: ColumnProps<User>[] = [
   {
@@ -37,7 +37,7 @@ export const columns: ColumnProps<User>[] = [
     render: (_, item) => {
       const status = USER_STATUS_MAP[item.status as UserStatus];
       return (
-        <Tag color={status.color}>{status.value}</Tag>
+        <Tag color={status?.color}>{status?.value}</Tag>
       );
     }
   }, 
@@ -62,16 +62,5 @@ export const columns: ColumnProps<User>[] = [
   {
     title: '得到关注数',
     dataIndex: 'follow_count'
-  },
-  {
-    title: '是否小册作者',
-    align: 'center',
-    render: (_, item) => {
-      return (
-        <Tag color={item.is_booklet_author ? 'arcoblue' : 'red'}>
-          {item.is_booklet_author === 1 ? '是' : '否'}
-        </Tag>
-      );
-    }
   }
 ];

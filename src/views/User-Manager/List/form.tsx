@@ -1,4 +1,4 @@
-import { USER_STATUS_MAP } from '@/const/user';
+import { USER_BOOKLET_MAP, USER_BOOKLET_MAP_KEY, USER_STATUS_MAP } from '@/const/user';
 import { UserStatus } from '@/typings/user';
 import { Form, Input, Select } from '@arco-design/web-react';
 
@@ -41,9 +41,25 @@ export const formColumns = [
         <FormItem label='状态' field='status'>
           <Select placeholder='选择状态'>
             { 
-                Object.keys(USER_STATUS_MAP).map(key => (
-                  <Option value={Number(key)}>{ USER_STATUS_MAP[key as unknown as UserStatus].value }</Option>
-                )) 
+              Object.keys(USER_STATUS_MAP).map(key => (
+                <Option value={Number(key)}>{ USER_STATUS_MAP[key as unknown as UserStatus].value }</Option>
+              )) 
+            }
+            </Select>
+        </FormItem>
+      );
+    }
+  },
+  {
+    id: 'is_booklet_author',
+    render() {
+      return (
+        <FormItem label='是否小册作者' field='is_booklet_author'>
+          <Select placeholder='选择状态'>
+            { 
+              Object.keys(USER_BOOKLET_MAP).map(key => (
+                <Option value={Number(key)}>{ USER_BOOKLET_MAP[key as unknown as USER_BOOKLET_MAP_KEY].value }</Option>
+              )) 
             }
             </Select>
         </FormItem>

@@ -3,8 +3,11 @@
   height: 100%;
 }
 
-.btn-area {
+.booklet-btn-area, .btn-area {
+  width: 100%;
   > button, > span {
+    margin-top: 10px;
     margin-left: 20px;
   }
 }
+

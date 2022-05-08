@@ -23,3 +23,7 @@ export const queryAdminList = (queryAdminDto: QueryAdminDto) => {
 export const createAdmin = (admin: CreateAdminDto) => {
   return request.post('/admin/add', admin);
 }
+
+export const auditUserBookletAuthor = (id: string, status: string | number) => {
+  return request.post(`/admin/user/bookletAuthor/audit/${id}/${status}`);
+}
