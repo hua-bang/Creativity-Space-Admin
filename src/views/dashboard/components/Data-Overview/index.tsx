@@ -7,6 +7,7 @@ import AuthorList from '@/components/Author-List';
 import ContentList from '@/components/Content-List';
 import PointList from '@/components/Point-List';
 import BookletRecommendList from '@/components/Booklet-Recommend-List';
+import AnalysisInfo from './components/Analyse-Info';
 
 const DataOverview: React.FC = () => {
 
@@ -22,6 +23,7 @@ const DataOverview: React.FC = () => {
       <div className={styles['overview-page-count-info']}>
         <CountInfo />
       </div>
+      <AnalysisInfo />
       <div className={styles['overview-page-recommend-info']}>
         <AuthorList />
         <ContentList />

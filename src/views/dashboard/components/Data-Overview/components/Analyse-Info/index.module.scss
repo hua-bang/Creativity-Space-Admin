@@ -31,9 +31,11 @@
 }
 
 .overview-broken-info {
+  flex-wrap: wrap;
   > div {
     width: 33.33% !important;
     box-sizing: border-box;
-    margin: 0 5px;
+    margin: 0;
+    padding: 0 5px;
   }
 }
